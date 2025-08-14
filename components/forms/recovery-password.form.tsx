@@ -34,8 +34,7 @@ export default function RecoveryPasswordForm() {
           toast.error(message)
         }
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
         toast.error('Something went wrong')
       })
       .finally(() => {

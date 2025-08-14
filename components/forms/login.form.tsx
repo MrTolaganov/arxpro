@@ -38,16 +38,14 @@ export default function LoginForm() {
               toast.success(message)
               router.replace('/')
             })
-            .catch(err => {
-              console.log(err)
+            .catch(() => {
               toast.error('Error during creating session')
             })
         } else {
           toast.error(message)
         }
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
         toast.error('Something went wrong')
       })
       .finally(() => {

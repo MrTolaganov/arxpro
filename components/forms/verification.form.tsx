@@ -28,8 +28,6 @@ export default function VerificationForm() {
   const router = useRouter()
 
   const onVerificationFormSubmit = (values: VerificationFormSchema) => {
-    console.log(values)
-
     if (userDetails?.email) {
       verifyOtp(userDetails.email, values.code)
         .then(({ status, message }) => {
@@ -46,8 +44,7 @@ export default function VerificationForm() {
                   toast.error(message)
                 }
               })
-              .catch(err => {
-                console.log(err)
+              .catch(() => {
                 toast.error('Something went wrong')
               })
               .finally(() => {
@@ -58,9 +55,8 @@ export default function VerificationForm() {
             toast.error(message)
           }
         })
-        .catch(error => {
+        .catch(() => {
           setIsLoading(false)
-          console.log(error)
           toast.error('Something went wrong')
         })
     }
@@ -75,8 +71,7 @@ export default function VerificationForm() {
             toast.error(message)
           }
         })
-        .catch(error => {
-          console.log(error)
+        .catch(() => {
           toast.error('Something went wrong')
         })
         .finally(() => {

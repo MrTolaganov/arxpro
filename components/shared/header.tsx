@@ -14,7 +14,7 @@ import { Skeleton } from '../ui/skeleton'
 import UserBox from './user-box'
 
 export default function Header() {
-  const { currentUser, isLoading, setCurrentUser } = useCurrentUser()
+  const { currentUser, isLoading } = useCurrentUser()
   const pathname = usePathname()
 
   return (
@@ -70,7 +70,7 @@ export default function Header() {
 
         {isLoading && <Skeleton className='size-10 rounded-full' />}
         {!isLoading && currentUser && (
-          <UserBox currentUser={currentUser} setCurrentUser={setCurrentUser} />
+          <UserBox currentUser={currentUser} />
         )}
         {!isLoading && !currentUser && <JoinButton />}
       </nav>

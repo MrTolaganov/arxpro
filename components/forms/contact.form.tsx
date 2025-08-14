@@ -15,9 +15,7 @@ export default function ContactForm() {
     defaultValues: { firstName: '', lastName: '', email: '', message: '' },
   })
 
-  const onContactFormSubmit = (values: ContactFormSchema) => {
-    console.log('Contact Form Submitted:', values)
-  }
+  const onContactFormSubmit = (values: ContactFormSchema) => {}
 
   return (
     <Form {...constactForm}>

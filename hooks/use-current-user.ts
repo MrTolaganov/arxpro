@@ -49,5 +49,5 @@ export default function useCurrentUser() {
     }
   }, [])
 
-  return { currentUser, isLoading, setCurrentUser }
+  return { currentUser, isLoading }
 }

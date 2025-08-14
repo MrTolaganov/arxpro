@@ -33,8 +33,7 @@ export async function getUserByEmail(email: string): Promise<Response<User | nul
         password: existingUser?.password,
       },
     }
-  } catch (error) {
-    console.log('Error: getUserByEmail(): ', error)
+  } catch {
     return { status: 500, message: 'Something went wrong', data: null }
   }
 }
@@ -71,9 +70,7 @@ export async function getCurrentUser(): Promise<Response<User | null>> {
         avatar: user?.avatar,
       },
     }
-  } catch (error) {
-    console.log(error)
-
+  } catch {
     return { status: 500, message: 'Something went wrong', data: null }
   }
 }
@@ -104,9 +101,7 @@ export async function recoverPassword(email: string, newPassword: string): Promi
     )
 
     return { status: 200, message: 'Password updated successfully', data: null }
-  } catch (error) {
-    console.log(error)
-
+  } catch {
     return { status: 500, message: 'Something went wrong', data: null }
   }
 }
@@ -123,7 +118,7 @@ export async function createOAuth2User(user: Account): Promise<Response<null>> {
     )
 
     return { status: 201, message: 'OAuth2 user created successfully', data: null }
-  } catch (error) {
+  } catch {
     return { status: 500, message: 'Something went wrong', data: null }
   }
 }

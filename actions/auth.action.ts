@@ -26,8 +26,7 @@ export async function register(user: User): Promise<Response<User | null>> {
     await setCookie('current_user', newUser?.userId!)
 
     return { status: 201, message: 'User registered successfully', data: registeredUser }
-  } catch (error) {
-    console.log('Error in register(): ', error)
+  } catch  {
     return { status: 500, message: 'Something went wrong', data: null }
   }
 }
@@ -48,8 +47,7 @@ export async function login(email: string, password: string): Promise<Response<U
     await setCookie('current_user', user?.userId!)
 
     return { status: 200, message: 'User logged in successfully', data: user }
-  } catch (error) {
-    console.log('Error in login(): ', error)
+  } catch  {
     return { status: 500, message: 'Something went wrong', data: null }
   }
 }
