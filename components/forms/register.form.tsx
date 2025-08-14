@@ -13,10 +13,11 @@ import { useState } from 'react'
 import { getUserByEmail } from '@/actions/user.action'
 import { toast } from 'sonner'
 import { sendOtp } from '@/actions/otp.action'
-import { ID } from 'appwrite'
+import { ID, OAuthProvider } from 'appwrite'
 import { Loader } from 'lucide-react'
 import { useUserDetails } from '@/hooks/use-user-details'
 import { FcGoogle } from 'react-icons/fc'
+import { account } from '@/lib/appwrite'
 
 interface RegisterFormProps {
   setIsVerifying: (isVerifying: boolean) => void
@@ -73,6 +74,23 @@ export default function RegisterForm({ setIsVerifying }: RegisterFormProps) {
         setIsLoading(false)
         console.error('Error fetching user by email:', err)
       })
+  }
+
+  const onContinueWithGoogle = async () => {
+    try {
+      setIsLoading(true)
+      account.createOAuth2Session(
+        OAuthProvider.Google,
+        process.env.NEXT_PUBLIC_BASE_URL,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/login`
+      )
+
+      localStorage.setItem('oauth2_user', ID.unique())
+    } catch (err) {
+      toast.error('Something went wrong')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -188,6 +206,7 @@ export default function RegisterForm({ setIsVerifying }: RegisterFormProps) {
           variant={'outline'}
           className='mt-2 w-full bg-transparent hover:bg-transparent h-10 rounded-[8px]'
           disabled={isLoading}
+          onClick={onContinueWithGoogle}
         >
           <FcGoogle />
           Continue with Google

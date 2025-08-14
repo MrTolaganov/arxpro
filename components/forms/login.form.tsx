@@ -60,8 +60,8 @@ export default function LoginForm() {
       setIsLoading(true)
       account.createOAuth2Session(
         OAuthProvider.Google,
-        'http://localhost:3000',
-        'http://localhost:3000/login'
+        process.env.NEXT_PUBLIC_BASE_URL,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/login`
       )
 
       localStorage.setItem('oauth2_user', ID.unique())
