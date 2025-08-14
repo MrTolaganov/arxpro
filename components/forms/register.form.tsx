@@ -82,7 +82,7 @@ export default function RegisterForm({ setIsVerifying }: RegisterFormProps) {
       account.createOAuth2Session(
         OAuthProvider.Google,
         process.env.NEXT_PUBLIC_BASE_URL,
-        `${process.env.NEXT_PUBLIC_BASE_URL}/login`
+        `${process.env.NEXT_PUBLIC_BASE_URL}/register`
       )
 
       localStorage.setItem('oauth2_user', ID.unique())
