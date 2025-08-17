@@ -129,3 +129,24 @@ export async function setCookie(value: string) {
 
   cookieStore.set(sessionCookieName, value)
 }
+
+export async function deleteDuplicatedUser(userId: string): Promise<Response<null>> {
+  try {
+    const documentsList = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.usersCollectionId,
+      [Query.equal('userId', userId)]
+    )
+
+    if (documentsList.total == 2) {
+      await databases.deleteDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.usersCollectionId,
+        documentsList.documents.at(0)?.$id!
+      )
+    }
+    return { status: 201, message: 'Duplicated user deleted successfully', data: null }
+  } catch {
+    return { status: 500, message: 'Something went wrong', data: null }
+  }
+}

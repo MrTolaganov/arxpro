@@ -1,4 +1,10 @@
-import { createOAuth2User, getCurrentUser, getUserByEmail, setCookie } from '@/actions/user.action'
+import {
+  createOAuth2User,
+  deleteDuplicatedUser,
+  getCurrentUser,
+  getUserByEmail,
+  setCookie,
+} from '@/actions/user.action'
 import { account } from '@/lib/appwrite'
 import { User } from '@/types'
 import { useEffect, useRef, useState } from 'react'
@@ -16,7 +22,9 @@ export default function useCurrentUser() {
         const { data: existingUser } = await getUserByEmail(user?.email!)
 
         if (!existingUser) {
-          await createOAuth2User(user)
+          createOAuth2User(user).then(async () => {
+            await deleteDuplicatedUser(user.$id)
+          })
         }
 
         await setCookie(user.$id)
