@@ -7,7 +7,6 @@ import { toast } from 'sonner'
 export default function useCurrentUser() {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const calledRef = useRef(false)
 
   const fetchOAuth2Account = async () => {
     try {
@@ -43,16 +42,11 @@ export default function useCurrentUser() {
   }
 
   useEffect(() => {
-    if (calledRef.current) return
-    console.log('Called')
-
     if (localStorage.getItem('oauth2_user')) {
       fetchOAuth2Account()
     } else {
       fetchCredentialsAccount()
     }
-
-    calledRef.current = true
   }, [])
 
   return { currentUser, isLoading }
