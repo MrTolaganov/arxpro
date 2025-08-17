@@ -69,9 +69,7 @@ export default function Header() {
         </Button>
 
         {isLoading && <Skeleton className='size-10 rounded-full' />}
-        {!isLoading && currentUser && (
-          <UserBox currentUser={currentUser} />
-        )}
+        {!isLoading && currentUser && <UserBox currentUser={currentUser} />}
         {!isLoading && !currentUser && <JoinButton />}
       </nav>
     </header>

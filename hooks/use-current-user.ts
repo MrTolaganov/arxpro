@@ -1,7 +1,7 @@
 import { createOAuth2User, getCurrentUser, getUserByEmail, setCookie } from '@/actions/user.action'
 import { account } from '@/lib/appwrite'
 import { User } from '@/types'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 export default function useCurrentUser() {
@@ -42,6 +42,8 @@ export default function useCurrentUser() {
   }
 
   useEffect(() => {
+    console.log('Called');
+    
     if (localStorage.getItem('oauth2_user')) {
       fetchOAuth2Account()
     } else {

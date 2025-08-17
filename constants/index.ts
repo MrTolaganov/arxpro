@@ -88,3 +88,30 @@ export const aboutPageCategories = [
     description: 'Comprehensive IT support to keep your systems running smoothly and efficiently.',
   },
 ]
+
+export const plans = [
+  {
+    type: 'Basic',
+    amountPerMonth: 0.0,
+    amountPerYear: 0.0,
+    description:
+      'Thank you for the fastest service ever, liked how everything in the house was ready on time in the house was ready on time.',
+    preferrence: 'Ability to upload up to 3 projects.',
+  },
+  {
+    type: 'Pro',
+    amountPerMonth: 12.0,
+    amountPerYear: 0.0,
+    description:
+      'Thank you for the fastest service ever, liked how everything in the house was ready on time in the house was ready on time.',
+    preferrence: 'Ability to upload up to 30 projects.',
+  },
+  {
+    type: 'Vip',
+    amountPerMonth: 25.0,
+    amountPerYear: 83.4,
+    description:
+      'Thank you for the fastest service ever, liked how everything in the house was ready on time in the house was ready on time.',
+    preferrence: 'Ability to upload up to 100 projects.',
+  },
+]
