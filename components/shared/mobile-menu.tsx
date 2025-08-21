@@ -65,7 +65,7 @@ export default function MobileMenu() {
           </SheetClose>
         ))}
 
-        <SheetClose asChild>
+        {/* <SheetClose asChild>
           <Button
             size={'sm'}
             variant={'ghost'}
@@ -76,7 +76,7 @@ export default function MobileMenu() {
               Get Pro <Star className='fill-primary text-primary size-6' />
             </div>
           </Button>
-        </SheetClose>
+        </SheetClose> */}
 
         <SheetTitle />
         <SheetDescription />

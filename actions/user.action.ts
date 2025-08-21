@@ -30,7 +30,15 @@ export async function getUserByEmail(email: string): Promise<Response<User | nul
         userId: existingUser?.userId,
         role: existingUser?.role,
         avatar: existingUser?.avatar,
+        avatarId: existingUser?.avatarId,
         password: existingUser?.password,
+        address: existingUser?.address,
+        phoneNumber: existingUser?.phoneNumber,
+        coverImage: existingUser?.coverImage,
+        coverImageId: existingUser?.coverImageId,
+        facebook: existingUser?.facebook,
+        telegram: existingUser?.telegram,
+        instagram: existingUser?.instagram,
       },
     }
   } catch {
@@ -68,6 +76,14 @@ export async function getCurrentUser(): Promise<Response<User | null>> {
         userId: user?.userId,
         role: user?.role,
         avatar: user?.avatar,
+        avatarId: user?.avatarId,
+        address: user?.address,
+        phoneNumber: user?.phoneNumber,
+        coverImage: user?.coverImage,
+        coverImageId: user?.coverImageId,
+        facebook: user?.facebook,
+        telegram: user?.telegram,
+        instagram: user?.instagram,
       },
     }
   } catch {
@@ -108,13 +124,11 @@ export async function recoverPassword(email: string, newPassword: string): Promi
 
 export async function createOAuth2User(user: Account): Promise<Response<null>> {
   try {
-    const avatarUrl = avatars.getInitials(user.name)
-
     await databases.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.usersCollectionId,
       ID.unique(),
-      { fullName: user.name, email: user.email, userId: user.$id, role: 'user', avatar: avatarUrl }
+      { fullName: user.name, email: user.email, userId: user.$id, role: 'user' }
     )
 
     return { status: 201, message: 'OAuth2 user created successfully', data: null }
@@ -138,14 +152,64 @@ export async function deleteDuplicatedUser(userId: string): Promise<Response<nul
       [Query.equal('userId', userId)]
     )
 
-    if (documentsList.total == 2) {
-      await databases.deleteDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.usersCollectionId,
-        documentsList.documents.at(0)?.$id!
-      )
-    }
-    return { status: 201, message: 'Duplicated user deleted successfully', data: null }
+    if (documentsList.total < 2)
+      return { status: 404, message: 'Duplicated user not found', data: null }
+
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.usersCollectionId,
+      documentsList.documents.at(0)?.$id!
+    )
+
+    return { status: 200, message: 'Duplicated user deleted successfully', data: null }
+  } catch {
+    return { status: 500, message: 'Something went wrong', data: null }
+  }
+}
+
+export async function updateProfile({
+  userId,
+  fullName,
+  address,
+  phoneNumber,
+  facebook,
+  telegram,
+  instagram,
+  avatar,
+  avatarId,
+  coverImage,
+  coverImageId,
+}: User): Promise<Response<null>> {
+  try {
+    const documentsList = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.usersCollectionId,
+      [Query.equal('userId', userId)]
+    )
+
+    if (documentsList.total === 0) return { status: 404, message: 'User not found', data: null }
+
+    const existingUser = documentsList.documents.at(0)
+
+    await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.usersCollectionId,
+      existingUser?.$id!,
+      {
+        fullName,
+        address: address || null,
+        phoneNumber: phoneNumber || null,
+        facebook: facebook || null,
+        telegram: telegram || null,
+        instagram: instagram || null,
+        avatar: avatar || null,
+        avatarId: avatarId || null,
+        coverImage: coverImage || null,
+        coverImageId: coverImageId || null,
+      }
+    )
+
+    return { status: 200, message: 'Profile updated successfully', data: null }
   } catch {
     return { status: 500, message: 'Something went wrong', data: null }
   }

@@ -9,7 +9,7 @@ export default function HeroSection() {
         src={'/images/bg-hero.png'}
         alt='Hero Image'
         fill
-        className='opacity-25 object-cover'
+        className='opacity-35 object-cover'
       />
       <div className='border-white-1 border-4 absolute z-20  max-md:top-32 md:top-40 max-md:left-12 md:left-40 max-md:right-12 md:right-40 max-md:bottom-32 md:bottom-40'>
         <div className='size-full z-30 relative'>

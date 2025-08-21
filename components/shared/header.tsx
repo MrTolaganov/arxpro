@@ -12,6 +12,7 @@ import Logo from './logo'
 import useCurrentUser from '@/hooks/use-current-user'
 import { Skeleton } from '../ui/skeleton'
 import UserBox from './user-box'
+import UserSkeleton from './user-skeleton'
 
 export default function Header() {
   const { currentUser, isLoading } = useCurrentUser()
@@ -19,7 +20,7 @@ export default function Header() {
 
   return (
     <header className='bg-transparent h-20 flex items-center justify-between max-sm:px-4 px-20 fixed z-50 w-full backdrop-blur-sm'>
-      <nav className='max-sm:hidden'>
+      <nav className='max-md:hidden'>
         <ul className='flex gap-x-12'>
           {menuLinks.map(({ path, name }) => (
             <li key={name}>
@@ -41,7 +42,7 @@ export default function Header() {
       <Logo />
 
       <nav className='flex items-center gap-x-12'>
-        <ul className='flex gap-x-12 max-sm:hidden'>
+        <ul className='flex gap-x-12 max-md:hidden md:ml-16'>
           {subMenuLinks.map(({ path, name }) => (
             <li key={name}>
               <Link
@@ -57,7 +58,7 @@ export default function Header() {
           ))}
         </ul>
 
-        <Button
+        {/* <Button
           size={'sm'}
           variant={'ghost'}
           className='hover:bg-transparent text-primary text-lg hover:text-primary max-sm:hidden font-bold'
@@ -66,9 +67,9 @@ export default function Header() {
           <div className='flex items-center gap-x-2 font-bold'>
             Get Pro <Star className='fill-primary text-primary size-6' />
           </div>
-        </Button>
+        </Button> */}
 
-        {isLoading && <Skeleton className='size-10 rounded-full' />}
+        {isLoading && <UserSkeleton />}
         {!isLoading && currentUser && <UserBox currentUser={currentUser} />}
         {!isLoading && !currentUser && <JoinButton />}
       </nav>

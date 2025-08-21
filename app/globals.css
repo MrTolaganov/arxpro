@@ -38,6 +38,7 @@
   --color-card: var(--card);
   --color-orange-1: var(--orange-1);
   --color-orange-2: var(--orange-2);
+  --color-orange-3: var(--orange-3);
   --color-blue-1: var(--blue-1);
   --color-blue-2: var(--blue-2);
   --color-blue-3: var(--blue-3);
@@ -132,6 +133,7 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
   --orange-1: #ff8933;
   --orange-2: #d65a0080;
+  --orange-3: #D65A001A;
   --blue-1: #233b6a;
   --blue-2: #233b6a80;
   --blue-3: #0a1d41;

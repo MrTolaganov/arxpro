@@ -7,7 +7,7 @@ import {
 } from '@/actions/user.action'
 import { account } from '@/lib/appwrite'
 import { User } from '@/types'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 export default function useCurrentUser() {
@@ -21,15 +21,21 @@ export default function useCurrentUser() {
       if (user.emailVerification) {
         const { data: existingUser } = await getUserByEmail(user?.email!)
 
+        await setCookie(user.$id)
+
         if (!existingUser) {
-          createOAuth2User(user).then(async () => {
+          return createOAuth2User(user).then(async () => {
             await deleteDuplicatedUser(user.$id)
+            setCurrentUser({
+              fullName: user.name,
+              role: 'user',
+              email: user.email,
+              userId: user.$id,
+            })
           })
         }
 
-        await setCookie(user.$id)
-
-        setCurrentUser({ fullName: user.name, role: 'user', email: user.email, userId: user.$id })
+        setCurrentUser(existingUser)
       }
     } catch (error) {
       toast.error('Something went wrong')

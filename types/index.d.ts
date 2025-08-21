@@ -1,5 +1,6 @@
 import {
   contactFormSchema,
+  editProfileFormSchema,
   forgotPasswordFormSchema,
   loginFormSchema,
   recoveryPasswordFormSchema,
@@ -20,10 +21,11 @@ type RegisterFormSchema = z.infer<typeof registerFormSchema>
 type ForgotPasswordFormSchema = z.infer<typeof forgotPasswordFormSchema>
 type VerificationFormSchema = z.infer<typeof verificationFormSchema>
 type RecoveryPasswordFormSchema = z.infer<typeof recoveryPasswordFormSchema>
+type EditProfileFormSchema = z.infer<typeof editProfileFormSchema>
 
 type Step = 'first' | 'second' | 'last'
 
-type Account=Models.User<Models.Preferences>
+type Account = Models.User<Models.Preferences>
 
 interface Otp {
   email: string
@@ -43,5 +45,13 @@ interface User {
   role: string
   userId: string
   avatar?: string
+  avatarId?: string
   password?: string
+  address?: string
+  phoneNumber?: string
+  telegram?: string
+  facebook?: string
+  instagram?: string
+  coverImage?: string
+  coverImageId?: string
 }

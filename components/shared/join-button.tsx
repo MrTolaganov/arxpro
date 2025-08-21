@@ -23,14 +23,14 @@ export default function JoinButton() {
           Join {isOpenedDropdown ? <ChevronUp /> : <ChevronDown />}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='bg-blue-3'>
-        <DropdownMenuItem asChild>
-          <Link href={'/login'} className='font-semibold'>
+      <DropdownMenuContent className='bg-background min-w-48'>
+        <DropdownMenuItem asChild className='text-base py-2'>
+          <Link href={'/login'} className='font-semibold text-base'>
             Login
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={'/register'} className='font-semibold'>
+        <DropdownMenuItem asChild className='text-base py-2'>
+          <Link href={'/register'} className='font-semibold text-base'>
             Register
           </Link>
         </DropdownMenuItem>

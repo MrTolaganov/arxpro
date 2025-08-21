@@ -60,3 +60,15 @@ export const recoveryPasswordFormSchema = z
     path: ['confirmedPassword'],
     message: 'Confirm password must be equal to new password',
   })
+
+export const editProfileFormSchema = z.object({
+  fullName: z
+    .string('Full name is required')
+    .min(3, 'Full name must be at least 3 characters')
+    .max(64, 'Full name must be less than 64 characters'),
+  phoneNumber: z.string().optional(),
+  address: z.string().optional(),
+  facebook: z.string().optional(),
+  telegram: z.string().optional(),
+  instagram: z.string().optional(),
+})
