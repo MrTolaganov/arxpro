@@ -9,6 +9,7 @@ const appwriteConfig = {
   bucketId: process.env.NEXT_PUBLIC_APPWRITE_BUCKET_ID!,
   usersCollectionId: process.env.NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID!,
   otpsCollectionId: process.env.NEXT_PUBLIC_APPWRITE_OTPS_COLLECTION_ID!,
+  projectsCollectionId: process.env.NEXT_PUBLIC_APPWRITE_PROJECTS_COLLECTION_ID!,
 }
 
 const client = new Client()

@@ -72,3 +72,26 @@ export const editProfileFormSchema = z.object({
   telegram: z.string().optional(),
   instagram: z.string().optional(),
 })
+
+export const addProjectFormSchema = z.object({
+  name: z
+    .string('Project name is required')
+    .min(3, 'Project name must be at least 3 characters')
+    .max(64, 'Project name must be less than 64 characters'),
+  description: z
+    .string('Project description is required')
+    .min(10, 'Project description must be at least 10 characters')
+    .max(1000, 'Project description must be less than 1000 characters'),
+  tags: z
+    .string('Project tags are required')
+    .min(3, 'Project tags must be at least 3 characters')
+    .max(500, 'Project tags must be less than 64 characters'),
+  location: z
+    .string('Project location is required')
+    .min(3, 'Project location must be at least 3 characters')
+    .max(64, 'Project location must be less than 64 characters'),
+  price: z
+    .string('Project price is required')
+    .min(1, 'Project price must be at least 1 character')
+    .max(64, 'Project price must be less than 64 characters'),
+})

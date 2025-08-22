@@ -28,8 +28,8 @@ export default function useCurrentUser() {
             await deleteDuplicatedUser(user.$id)
             setCurrentUser({
               fullName: user.name,
-              role: 'user',
               email: user.email,
+              role: 'user',
               userId: user.$id,
             })
           })

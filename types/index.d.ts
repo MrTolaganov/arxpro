@@ -1,4 +1,5 @@
 import {
+  addProjectFormSchema,
   contactFormSchema,
   editProfileFormSchema,
   forgotPasswordFormSchema,
@@ -22,6 +23,7 @@ type ForgotPasswordFormSchema = z.infer<typeof forgotPasswordFormSchema>
 type VerificationFormSchema = z.infer<typeof verificationFormSchema>
 type RecoveryPasswordFormSchema = z.infer<typeof recoveryPasswordFormSchema>
 type EditProfileFormSchema = z.infer<typeof editProfileFormSchema>
+type AddProjectFormSchema = z.infer<typeof addProjectFormSchema>
 
 type Step = 'first' | 'second' | 'last'
 
@@ -54,4 +56,21 @@ interface User {
   instagram?: string
   coverImage?: string
   coverImageId?: string
+}
+
+interface File {
+  fileId?: string
+  url?: string
+}
+
+interface Project {
+  id: string
+  name: string
+  description: string
+  price: number
+  location: string
+  images: string[]
+  video: string
+  tags: string[]
+  author: User
 }
