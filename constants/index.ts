@@ -115,3 +115,5 @@ export const plans = [
     preferrence: 'Ability to upload up to 100 projects.',
   },
 ]
+
+export const projectTags = ['technology', 'industry', 'living room']

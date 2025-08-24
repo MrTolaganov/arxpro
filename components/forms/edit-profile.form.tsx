@@ -21,6 +21,7 @@ interface EditProfileFormProps {
 
 export default function EditProfileForm({ currentUser }: EditProfileFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
+
   const [avatarImage, setAvatarImage] = useState({
     fileId: currentUser?.avatarId,
     url: currentUser?.avatar,

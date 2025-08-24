@@ -1,3 +1,5 @@
+'use client'
+
 import { AddProjectFormSchema, File, User } from '@/types'
 import { Button } from '../ui/button'
 import { Loader, Plus, X } from 'lucide-react'
@@ -13,6 +15,15 @@ import { addProjectFormSchema } from '@/lib/validations'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form'
 import { Textarea } from '../ui/textarea'
 import { createProject } from '@/actions/project.action'
+import {
+  MultiSelect,
+  MultiSelectContent,
+  MultiSelectGroup,
+  MultiSelectItem,
+  MultiSelectTrigger,
+  MultiSelectValue,
+} from '../ui/multi-select'
+import { projectTags } from '@/constants'
 
 interface AddProjectFormProps {
   currentUser: User
@@ -28,7 +39,7 @@ export default function AddProjectForm({ currentUser }: AddProjectFormProps) {
 
   const addProjectForm = useForm<AddProjectFormSchema>({
     resolver: zodResolver(addProjectFormSchema),
-    defaultValues: { name: '', description: '', tags: '', location: '', price: '' },
+    defaultValues: { name: '', description: '', tags: [], location: '', price: '' },
   })
 
   const onProjectImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -89,16 +100,15 @@ export default function AddProjectForm({ currentUser }: AddProjectFormProps) {
       return
     }
 
-    const id = ID.unique()
+    const $id = ID.unique()
     const images = projectImages.map(image => image.url!)
     const video = projectVideo.url!
-    const tags = values.tags.split(',').map(tag => tag.trim().toLowerCase())
     const author = currentUser
     const price = +values.price
 
     setIsSubmitting(true)
 
-    createProject({ ...values, id, author, price, images, tags, video })
+    createProject({ ...values, $id, author, price, images, video })
       .then(({ status, message }) => {
         if (status === 201) {
           toast.success(message)
@@ -229,7 +239,6 @@ export default function AddProjectForm({ currentUser }: AddProjectFormProps) {
                 </FormItem>
               )}
             />
-
             <FormField
               control={addProjectForm.control}
               name='price'
@@ -249,7 +258,6 @@ export default function AddProjectForm({ currentUser }: AddProjectFormProps) {
                 </FormItem>
               )}
             />
-
             <FormField
               control={addProjectForm.control}
               name='location'
@@ -268,7 +276,6 @@ export default function AddProjectForm({ currentUser }: AddProjectFormProps) {
                 </FormItem>
               )}
             />
-
             <FormField
               control={addProjectForm.control}
               name='tags'
@@ -276,12 +283,24 @@ export default function AddProjectForm({ currentUser }: AddProjectFormProps) {
                 <FormItem>
                   <FormLabel className='mb-1 text-base'>Tags</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isSubmitting}
-                      placeholder='Enter project tags (e.g. technology, industry)'
-                      className='rounded-[8px] h-10'
-                    />
+                    <MultiSelect values={field.value} onValuesChange={field.onChange}>
+                      <MultiSelectTrigger className='w-full rounded-[8px] hover:bg-transparent'>
+                        <MultiSelectValue placeholder='Select project tags' />
+                      </MultiSelectTrigger>
+                      <MultiSelectContent className='bg-background'>
+                        <MultiSelectGroup>
+                          {projectTags.map(projectTag => (
+                            <MultiSelectItem
+                              key={projectTag}
+                              value={projectTag}
+                              className='capitalize'
+                            >
+                              {projectTag}
+                            </MultiSelectItem>
+                          ))}
+                        </MultiSelectGroup>
+                      </MultiSelectContent>
+                    </MultiSelect>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

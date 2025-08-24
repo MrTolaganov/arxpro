@@ -82,10 +82,7 @@ export const addProjectFormSchema = z.object({
     .string('Project description is required')
     .min(10, 'Project description must be at least 10 characters')
     .max(1000, 'Project description must be less than 1000 characters'),
-  tags: z
-    .string('Project tags are required')
-    .min(3, 'Project tags must be at least 3 characters')
-    .max(500, 'Project tags must be less than 64 characters'),
+  tags: z.array(z.string()).min(1, 'At least one tag is required'),
   location: z
     .string('Project location is required')
     .min(3, 'Project location must be at least 3 characters')

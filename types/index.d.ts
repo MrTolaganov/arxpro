@@ -64,7 +64,7 @@ interface File {
 }
 
 interface Project {
-  id: string
+  $id: string
   name: string
   description: string
   price: number
@@ -73,4 +73,24 @@ interface Project {
   video: string
   tags: string[]
   author: User
+  $createdAt?: string
+}
+
+export interface QueryParams {
+  params: string
+  key: string
+  value?: string | null
+}
+
+type SearchParams = { [key: string]: string | string[] | undefined }
+
+interface Params {
+  searchParams: Promise<SearchParams>
+}
+
+interface SearchParamsValues {
+  page: number
+  pageSize: number
+  query?: string
+  filter?: string
 }

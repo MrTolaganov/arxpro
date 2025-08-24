@@ -1,7 +1,7 @@
 'use server'
 
 import { appwriteConfig, databases } from '@/lib/appwrite'
-import { Project, Response } from '@/types'
+import { Project, Response, SearchParamsValues } from '@/types'
 import { Query } from 'appwrite'
 
 export async function createProject(project: Project): Promise<Response<Project | null>> {
@@ -17,10 +17,9 @@ export async function createProject(project: Project): Promise<Response<Project 
     const projectDocument = await databases.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.projectsCollectionId,
-      project.id,
+      project.$id,
       { ...project, author: user?.$id }
     )
-    console.log('Project created:', projectDocument)
 
     await databases.updateDocument(
       appwriteConfig.databaseId,
@@ -33,5 +32,27 @@ export async function createProject(project: Project): Promise<Response<Project 
   } catch (error) {
     console.error('Error creating project:', error)
     return { status: 500, message: 'Something went wrong', data: null }
+  }
+}
+
+export async function getProjects({
+  page,
+  pageSize,
+  filter,
+  query,
+}: SearchParamsValues): Promise<Response<Project[] | null>> {
+  try {
+    const allProjectsDocuments = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.projectsCollectionId
+    )
+
+    const allProjects = allProjectsDocuments.documents
+
+    // @ts-ignore
+    return { status: 200, message: 'Projects fetched successfully', data: allProjects as Project[] }
+  } catch (error) {
+    console.error('Error fetching projects:', error)
+    return { status: 500, message: 'Something went wrong', data: [] }
   }
 }
