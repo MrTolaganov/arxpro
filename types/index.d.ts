@@ -93,4 +93,5 @@ interface SearchParamsValues {
   pageSize: number
   query?: string
   filter?: string
+  category?: string
 }

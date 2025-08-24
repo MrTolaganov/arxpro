@@ -22,3 +22,17 @@ export function removeUrlQuery({ params, key }: QueryParams) {
 
   return qs.stringifyUrl({ url: window.location.pathname, query: currentUrl }, { skipNull: true })
 }
+
+export function getPaginationPages(page: number, totalPages: number) {
+  const delta = 2 // how many pages before/after current
+  const start = Math.max(1, page - delta)
+  const end = Math.min(totalPages, page + delta)
+  const pages: number[] = []
+
+  for (let i = start; i <= end; i++) pages.push(i)
+
+  if (start > 1) pages.unshift(1)
+  if (end < totalPages) pages.push(totalPages)
+
+  return [...new Set(pages)]
+}

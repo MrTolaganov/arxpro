@@ -40,19 +40,60 @@ export async function getProjects({
   pageSize,
   filter,
   query,
-}: SearchParamsValues): Promise<Response<Project[] | null>> {
+  category,
+}: SearchParamsValues): Promise<
+  Response<{ projects: Project[]; isNext: boolean; totalPages: number }>
+> {
   try {
-    const allProjectsDocuments = await databases.listDocuments(
+    const filterQueries: string[] = []
+    const offsetAmount = (page - 1) * pageSize
+
+    // Search (needs fulltext index on "name")
+    if (query) {
+      filterQueries.push(Query.search('name', query))
+    }
+
+    // Sorting
+    if (filter === 'latest') {
+      filterQueries.push(Query.orderDesc('$createdAt'))
+    }
+
+    // Category filter (tags array)
+    if (category && category !== 'all') {
+      filterQueries.push(Query.contains('tags', [category]))
+    }
+
+    // Total count (⚠️ heavy on big collections)
+    const totalProjectsDocuments = await databases.listDocuments(
       appwriteConfig.databaseId,
-      appwriteConfig.projectsCollectionId
+      appwriteConfig.projectsCollectionId,
+      filterQueries
     )
 
-    const allProjects = allProjectsDocuments.documents
+    // Paged projects (fetch +1 for isNext detection)
+    const projectsDocuments = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.projectsCollectionId,
+      [...filterQueries, Query.limit(pageSize + 1), Query.offset(offsetAmount)]
+    )
 
-    // @ts-ignore
-    return { status: 200, message: 'Projects fetched successfully', data: allProjects as Project[] }
+    const totalProjects = totalProjectsDocuments.documents
+    const projects = projectsDocuments.documents.slice(0, pageSize)
+    const isNext = totalProjects.length > page * pageSize
+    const totalPages = Math.ceil(totalProjects.length / pageSize)
+
+    return {
+      status: 200,
+      message: 'Projects fetched successfully',
+      // @ts-ignore
+      data: { projects: projects as Project[], isNext, totalPages },
+    }
   } catch (error) {
     console.error('Error fetching projects:', error)
-    return { status: 500, message: 'Something went wrong', data: [] }
+    return {
+      status: 500,
+      message: 'Something went wrong',
+      data: { projects: [], isNext: false, totalPages: 1 },
+    }
   }
 }
