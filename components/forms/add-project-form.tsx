@@ -288,13 +288,9 @@ export default function AddProjectForm({ currentUser }: AddProjectFormProps) {
                         <MultiSelectValue placeholder='Select project tags' />
                       </MultiSelectTrigger>
                       <MultiSelectContent className='bg-background'>
-                        <MultiSelectGroup>
-                          {projectTags.map(projectTag => (
-                            <MultiSelectItem
-                              key={projectTag}
-                              value={projectTag}
-                              className='capitalize'
-                            >
+                        <MultiSelectGroup >
+                          {projectTags.slice(1).map(projectTag => (
+                            <MultiSelectItem key={projectTag} value={projectTag}>
                               {projectTag}
                             </MultiSelectItem>
                           ))}

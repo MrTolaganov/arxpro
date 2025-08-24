@@ -116,4 +116,72 @@ export const plans = [
   },
 ]
 
-export const projectTags = ['technology', 'industry', 'living room']
+export const projectTags = [
+  'All',
+  'Home Interior',
+  'Apartment Interior',
+  'Dream Home',
+  'Home Design',
+  'Interior Design',
+  'Studio Interior',
+  'Modern Home Design',
+  'Classic Home Design',
+  'Minimalist Home',
+  'Smart Home Interior',
+]
+
+// #HomeInterior
+
+// #ApartmentInterior
+
+// #DreamHome
+
+// #HomeDesign
+
+// #InteriorDesign
+
+// #HomeDecor
+
+// #LivingRoomDesign
+
+// #BedroomInterior
+
+// #KitchenInterior
+
+// #BathroomInterior
+
+// #KidsRoomDesign
+
+// #StudioInterior
+
+// #TinyHouseDesign
+
+// #LuxuryVillaDesign
+
+// #CozyHome
+
+// #ModernHomeDesign
+
+// #ClassicHomeDesign
+
+// #MinimalistHome
+
+// #ScandinavianInterior
+
+// #JapandiInterior
+
+// #EcoFriendlyHome
+
+// #SmartHomeInterior
+
+// #HomeRenovation
+
+// #InteriorGoals
+
+// #InteriorInspo
+
+// #ColorPalette
+
+// #FurnitureDesign
+
+// #LightingDesign

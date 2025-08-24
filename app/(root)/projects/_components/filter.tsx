@@ -16,6 +16,7 @@ import { debounce } from 'lodash'
 import { User } from '@/types'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { projectTags } from '@/constants'
 
 interface FilterProps {
   currentUser: User | null
@@ -84,16 +85,18 @@ export default function Filter({ currentUser }: FilterProps) {
           </Select>
 
           <Select
-            defaultValue={'all'}
+            defaultValue={'All'}
             onValueChange={selectValue => onSelectChangeUrl('category', selectValue)}
           >
             <SelectTrigger className={'w-1/2 md:w-48'}>
               <SelectValue placeholder={'Filter'} className={'text-muted-foreground'} />
             </SelectTrigger>
             <SelectContent className={'m-0 bg-background'}>
-              <SelectItem value={'all'}>All</SelectItem>
-              <SelectItem value={'technology'}>Technology</SelectItem>
-              <SelectItem value={'industry'}>Industry</SelectItem>
+              {projectTags.map(projectTag => (
+                <SelectItem key={projectTag} value={projectTag}>
+                  {projectTag}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
