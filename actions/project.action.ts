@@ -97,3 +97,23 @@ export async function getProjects({
     }
   }
 }
+
+export async function getProjectById(projectId: string): Promise<Response<Project | null>> {
+  try {
+    const projectDocument = await databases.getDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.projectsCollectionId,
+      projectId
+    )
+
+    return {
+      status: 200,
+      message: 'Project fetched successfully',
+      // @ts-ignore
+      data: projectDocument as Project,
+    }
+  } catch (error) {
+    console.error('Error fetching project by ID:', error)
+    return { status: 500, message: 'Something went wrong', data: null }
+  }
+}
