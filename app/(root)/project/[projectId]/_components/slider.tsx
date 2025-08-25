@@ -20,7 +20,7 @@ export default function Slider({ projectImages }: SliderProps) {
     >
       {projectImages.map((image, index) => (
         <SwiperSlide key={index} className='rounded-[8px]'>
-          <div className='full h-64 md:h-[550px] relative rounded-[8px]'>
+          <div className='w-full h-64 md:h-[550px] relative rounded-[8px]'>
             <Image
               src={image}
               alt={`Project Image ${index + 1}`}
