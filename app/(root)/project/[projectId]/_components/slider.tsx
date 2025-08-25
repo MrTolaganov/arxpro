@@ -19,7 +19,7 @@ export default function Slider({ projectImages }: SliderProps) {
       className='mySwiper'
     >
       {projectImages.map((image, index) => (
-        <SwiperSlide key={index}>
+        <SwiperSlide key={index} className='rounded-[8px]'>
           <div className='full h-64 md:h-[550px] relative rounded-[8px]'>
             <Image
               src={image}
