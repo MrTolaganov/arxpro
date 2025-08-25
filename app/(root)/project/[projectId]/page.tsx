@@ -57,7 +57,7 @@ export default async function ProjectPage({ params }: RouteParams) {
       </div>
 
       <div className='md:mx-12 lg:mx-24 mt-6'>
-        <Slider projectImages={project?.images!} />
+        <Slider projectImages={project?.images ?? []} />
       </div>
 
       <div className='mt-6 md:mx-12 lg:mx-24 flex items-center justify-between'>
