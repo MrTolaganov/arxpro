@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Mulish } from 'next/font/google'
 import { ChildProps } from '@/types'
 import './globals.css'
+import 'swiper/css'
+import 'swiper/css/pagination'
 import TopLoader from '@/components/shared/top-loader'
 import { Toaster } from 'sonner'
 
