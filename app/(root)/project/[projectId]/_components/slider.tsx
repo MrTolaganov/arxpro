@@ -12,7 +12,6 @@ export default function Slider({ projectImages }: SliderProps) {
   return (
     <Swiper
       spaceBetween={30}
-      loop
       pagination={{ clickable: true }}
       modules={[Pagination]}
       className='mySwiper'
