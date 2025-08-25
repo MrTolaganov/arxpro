@@ -25,15 +25,5 @@ export default async function ProjectPage({ params }: RouteParams) {
   const { projectId } = await params
   const { data: project } = await getProjectById(projectId)
 
-  const res = await fetch(
-    `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-      project?.location!
-    )}&format=json&limit=1`
-  )
-
-  const data = await res.json()
-  const lat = data[0]?.lat
-  const lon = data[0]?.lon
-
-  return <DetailedProject project={project} lat={lat} lon={lon} />
+  return <DetailedProject project={project} />
 }

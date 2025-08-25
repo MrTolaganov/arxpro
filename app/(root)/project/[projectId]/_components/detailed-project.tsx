@@ -9,14 +9,33 @@ import Image from 'next/image'
 import { format } from 'date-fns'
 import Slider from './slider'
 import ProjectActions from './projects-actions'
+import { useEffect, useState } from 'react'
 
 interface DetailedProjectProps {
   project: Project | null
-  lat: number
-  lon: number
 }
 
-export default function DetailedProject({ project, lat, lon }: DetailedProjectProps) {
+export default function DetailedProject({ project }: DetailedProjectProps) {
+  const [locationData, setLocationData] = useState({ lat: 0, lon: 0 })
+
+  useEffect(() => {
+    const getLatAndLon = async () => {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+          project?.location!
+        )}&format=json&limit=1`
+      )
+
+      const data = await res.json()
+      const lat = data[0]?.lat
+      const lon = data[0]?.lon
+
+      setLocationData({ lat, lon })
+    }
+
+    getLatAndLon()
+  }, [project?.location])
+
   return (
     <div className='px-4 md:px-24 pt-28'>
       <SectionHeader title={project?.name!} />
@@ -86,7 +105,7 @@ export default function DetailedProject({ project, lat, lon }: DetailedProjectPr
       <div className='mt-8 flex flex-col md:flex-row-reverse gap-6 md:mx-12 lg:mx-24'>
         <p className='text-lg flex-1 text-muted-foreground'>{project?.description}</p>
         <iframe
-          src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d191885.5985383025!2d${lon}!3d${lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b0cc379e9c3%3A0xa5a9323b4aa5cb98!2sTashkent%2C%20Uzbekistan!5e0!3m2!1sen!2s!4v1756131178554!5m2!1sen!2s`}
+          src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d191885.5985383025!2d${locationData.lon}!3d${locationData.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b0cc379e9c3%3A0xa5a9323b4aa5cb98!2sTashkent%2C%20Uzbekistan!5e0!3m2!1sen!2s!4v1756131178554!5m2!1sen!2s`}
           loading='lazy'
           className='w-full md:w-1/3 h-64 rounded-[8px]'
         ></iframe>
